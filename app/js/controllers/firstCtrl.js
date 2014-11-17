@@ -1,8 +1,8 @@
 angular.module('proyectoLuisa').controller('firstCtrl', firstCtrl);
 
-firstCtrl.$inject = ['$scope', '$state'];
+firstCtrl.$inject = ['$scope', '$state', '$firebase'];
 
-function firstCtrl($scope, $state){
+function firstCtrl($scope, $state, $firebase){
 
   // Movie Constructor
   $scope.movie = {
@@ -11,9 +11,7 @@ function firstCtrl($scope, $state){
     image: ''
   }
 
-
   // convert image to base64
-  var tastyTest;
   function el(id){
     return document.getElementById(id);
   } // Get elem by ID
@@ -33,5 +31,7 @@ function firstCtrl($scope, $state){
   // ng-click methods
   $scope.saveMovie = function(){
     console.log($scope.movie);
+    var saveRef = $firebase(new Firebase('https://cms-luisa.firebaseio.com/peliculas'));
+    saveRef.$push($scope.movie);
   };
 };
